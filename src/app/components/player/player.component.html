@@ -13,6 +13,11 @@
         </div>
     </div> 
     <div *ngIf="started">
-        <h4>{{users.values()}}</h4>
+        <h4>Süreniz Başladı Kelimeyi Bilmeye Çalışın !</h4>
+        <span>
+            Kalan Süreniz:
+            <countdown [config]="{ leftTime: 300, format: 'm:s' }"></countdown>
+        </span>
+        <h3>{{setWordsToLengths()}}</h3>
     </div>
 </div>
