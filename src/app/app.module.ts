@@ -11,12 +11,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { AddWordsComponent } from './components/add-words/add-words.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WordsComponent,
-    PlayerComponent
+    PlayerComponent,
+    AddWordsComponent
   ],
   imports: [
     BrowserModule,
