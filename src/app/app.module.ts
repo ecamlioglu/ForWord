@@ -12,13 +12,14 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { AddWordsComponent } from './components/add-words/add-words.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     AppComponent,
     WordsComponent,
     PlayerComponent,
-    AddWordsComponent
+    AddWordsComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +28,8 @@ import { AddWordsComponent } from './components/add-words/add-words.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     ButtonsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

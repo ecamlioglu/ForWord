@@ -1,7 +1,18 @@
-<div>
-    <div>
-        <div class="container">
-            
+<div class="container">
+    <div *ngIf="!started">
+        <div class="form-group">
+            <div class="user-input">
+                <h5>İsminizi Giriniz...</h5>
+                <input type="text" maxlength="64"
+                class="form-control" required
+                [(ngModel)]="name" name=title>
+            </div>
+            <div>
+                <button class="btn btn-primary" (click)="setUserName(name)">Başla!</button>
+            </div>
         </div>
+    </div> 
+    <div *ngIf="started">
+        <h4>{{users.values()}}</h4>
     </div>
 </div>
