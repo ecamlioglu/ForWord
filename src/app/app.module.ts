@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { PlayerComponent } from './components/player/player.component';
 import { WordsComponent } from './components/words/words.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +21,11 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ButtonsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    ButtonsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
