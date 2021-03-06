@@ -4,7 +4,8 @@
             <label for="title"> WORD </label>
             <input type="text" id="title"
             class="form-control" required 
-            [(ngModel)]="word.word" name="title">
+            [(ngModel)]="word.word" name="title"
+            (keyup.enter)="saveWord()">
         </div>
         <button (click)="saveWord()" class="btn btn-success">Kayıt Et</button>
     </div>
