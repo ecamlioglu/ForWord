@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { AddWordsComponent } from './components/add-words/add-words.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AngularFireDatabaseModule,
     ButtonsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CountdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
