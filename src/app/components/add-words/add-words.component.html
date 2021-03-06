@@ -1,0 +1,15 @@
+<div class="submit-form">
+    <div *ngIf="!submitted">
+        <div class="form-group">
+            <label for="title"> WORD </label>
+            <input type="text" id="title"
+            class="form-control" required 
+            [(ngModel)]="word.word" name="title">
+        </div>
+        <button (click)="saveWord()" class="btn btn-success">Kayıt Et</button>
+    </div>
+    <div *ngIf="submitted">
+        <h4>Kelime başarı ile kayıt edildi!</h4>
+        <button class="btn btn-success" (click)="newWord()">Yeni Kelime Oluştur</button>
+    </div>
+</div>
