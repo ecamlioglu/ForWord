@@ -8,16 +8,35 @@
                 [(ngModel)]="name" name=title>
             </div>
             <div>
-                <button class="btn btn-primary" (click)="setUserName(name)">Başla!</button>
+                <button mat-flat-button color="primary"(click)="setUserName(name)" [disabled]="!name">Başla!</button>
             </div>
         </div>
     </div> 
     <div *ngIf="started">
-        <h4>Süreniz Başladı Kelimeyi Bilmeye Çalışın !</h4>
-        <span>
-            Kalan Süreniz:
-            <countdown [config]="{ leftTime: 300, format: 'm:s' }"></countdown>
-        </span>
-        <h3>{{setWordsToLengths()}}</h3>
+        <div *ngIf="!timerStarted">
+            <h3>Hazırsan süreyi başlatabilirsin.
+                <small class="text-muted">Oyuna başlamak için süreyi başlatmak gereklidir.</small>
+            </h3>
+            <button mat-flat-button color="accent" (click)="countdownStart()"> Süreyi Başlat !</button>
+        </div>
+        <div *ngIf="timerStarted">
+            <div class="counter">
+
+                <h4>Süreniz Başladı Kelimeyi Bilmeye Çalışın !</h4>
+                <span>
+                    Kalan Süreniz:
+                    <countdown #cd [config]="{ leftTime: gameTime, format: 'm:s'}"></countdown>
+                </span>
+            </div>
+            <div>
+                <span *ngFor="let letter of letters">
+                    <label class="letter" for="letter">☐</label>
+                </span>
+                <mat-card >
+                    <input matInput class="form-control" placeholder="Tahmininizi Girin" type="text" [(ngModel)]="predictedVal" name=predictedVal>
+                </mat-card>
+            </div>
+            <button mat-flat-button color="warn" (click)="finishGame()">Bitir!</button>
+        </div>
     </div>
 </div>

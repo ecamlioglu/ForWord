@@ -14,6 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { AddWordsComponent } from './components/add-words/add-words.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CountdownModule } from 'ngx-countdown';
+import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from "@angular/material/button";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+
 
 @NgModule({
   declarations: [
@@ -31,7 +35,10 @@ import { CountdownModule } from 'ngx-countdown';
     ButtonsModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
-    CountdownModule
+    CountdownModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

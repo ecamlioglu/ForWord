@@ -1,5 +1,5 @@
 export class Word {
-    key?: string | null;
+    key: string;
     word?: string;
     completed?: boolean;
 }

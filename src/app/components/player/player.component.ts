@@ -6,9 +6,7 @@ import { map } from 'rxjs/operators';
 import { Word } from 'src/app/models/word.model';
 import { WordsLength } from 'src/app/models/words-length.model';
 import { LevelWords } from 'src/app/models/level-words.model';
-import { templateJitUrl } from '@angular/compiler';
-import { CountdownModule } from 'ngx-countdown';
-
+import { CountdownComponent } from 'ngx-countdown';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -17,12 +15,19 @@ import { CountdownModule } from 'ngx-countdown';
 export class PlayerComponent implements OnInit {
   @Input() name: string;
 
+  @ViewChild('cd', { static: false }) countdown: CountdownComponent;
+  gameTime = 300; // this time is secondly
+
+  predictedVal: string;
+
   user: User;
   started = false;
   isKnew = false;
+  timerStarted = false;
   sessionDone = true;
+  finishedGame = false;
   lastGameId: number;
-  
+
   wordPoint: number;
   sessionCount: number;
   expectedlyWordLength = 4;
@@ -32,8 +37,7 @@ export class PlayerComponent implements OnInit {
 
   levels = WordsLength;
   levelWords: LevelWords;
-
-  gameWord: string;
+  letters: any[];
 
   users: User[];
   words: Word[] = [];
@@ -61,6 +65,9 @@ export class PlayerComponent implements OnInit {
   }
 
   setUserName(name: string): void {
+    if(!name){
+      return;
+    }
     this.user.name = name;
     let currentUserId: number;
     if (this.users.length == 0 || this.users.length == undefined) {
@@ -68,9 +75,8 @@ export class PlayerComponent implements OnInit {
     } else {
       currentUserId = this.users.length + 1;
     }
-    this.user.key = "word-" + currentUserId;
-    this._wordService.createUser(this.user);
-    this.openSnackBar('Oyuncu oluşturuldu! ', 'Başla');
+    this.user.gameId = "word-" + currentUserId;
+    this.openSnackBar('Oyuna başlayabilirsiniz!', 'Başla');
     this.started = true;
   }
 
@@ -89,6 +95,7 @@ export class PlayerComponent implements OnInit {
         p => ({ key: p.payload.key, ...p.payload.val() })
       ))).subscribe(data => {
         this.words = data;
+        console.log(this.words);
       });
     this.setWordsToLengths();
   }
@@ -128,31 +135,35 @@ export class PlayerComponent implements OnInit {
     });
   }
 
-  getWordForLevels(input: number): void{
-    if(input === 4){
+  getWordForLevels(input: number): void {
+    if (input === 4) {
       this.currentWord = this.levelWords.level_1[this.randomInt(0, input)].word;
-    }else if(input === 5){
+    } else if (input === 5) {
       this.currentWord = this.levelWords.level_2[this.randomInt(0, input)].word;
-    }else if(input === 6){
+    } else if (input === 6) {
       this.currentWord = this.levelWords.level_3[this.randomInt(0, input)].word;
-    }else if(input === 7){
+    } else if (input === 7) {
       this.currentWord = this.levelWords.level_4[this.randomInt(0, input)].word;
-    }else if(input === 8){
+    } else if (input === 8) {
       this.currentWord = this.levelWords.level_5[this.randomInt(0, input)].word;
-    }else if(input === 9){
+    } else if (input === 9) {
       this.currentWord = this.levelWords.level_6[this.randomInt(0, input)].word;
-    }else if(input === 10){
+    } else if (input === 10) {
       this.currentWord = this.levelWords.level_7[this.randomInt(0, input)].word;
     }
+
+    this.letters = Array.from(this.currentWord);
+    console.log(this.currentWord);
   }
 
   gameController(): void {
-    if(this.started){
-      if(this.sessionDone){
+    this.getWords();
+    if (this.started) {
+      if (this.sessionDone) {
         this.getWordForLevels(this.expectedlyWordLength);
         this.wordPoint = this.currentWord.length * 100;
-        if(this.isKnew){
-          if(this.sessionCount == 2){
+        if (this.isKnew) {
+          if (this.sessionCount == 2) {
             this.expectedlyWordLength++;
           }
           this.isKnew = false;
@@ -164,7 +175,7 @@ export class PlayerComponent implements OnInit {
   }
 
   wordController(word: string): void {
-    if (this.currentWord == word){
+    if (this.currentWord == word) {
       this.isKnew = true;
       this.playerPoint += this.wordPoint;
       this.wordPoint = 0;
@@ -174,12 +185,35 @@ export class PlayerComponent implements OnInit {
     }
   }
 
-  isHintTaken(): void {
+
+  isHintTaken(): void {
     this.wordPoint -= 100;
   }
 
   hint(): void {
 
+  }
+
+  gameTimer(): void {
+    if (this.countdown.config.leftTime <= 0) {
+      this.finishGame();
+    }
+  }
+
+  finishGame(): void {
+    this.started = false;
+    this.countdown.pause();
+    const finishedTime = 300000 - this.countdown.left;
+    console.log(finishedTime);
+    this.user.secondsToLive = finishedTime.toString();
+    this._wordService.createUser(this.user).then(
+      this.openSnackBar("Oyun bitti!", "Kapat")
+    ).catch(err => console.log(err));
+  }
+
+  countdownStart(): void{
+    this.timerStarted = true;
+    this.gameController();
   }
 
 }

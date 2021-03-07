@@ -1,6 +1,6 @@
 export class User {
-    key?: string | null;
-    name?: string;
+    key: string;
+    name: string;
     secondsToLive?: string;
-    gameId?: number;
+    gameId?: string;
 }
