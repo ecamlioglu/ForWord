@@ -6,7 +6,7 @@
                 <input type="text" maxlength="64" class="form-control" required [(ngModel)]="name" name=title>
             </div>
             <div>
-                <button mat-flat-button color="primary" (click)="setUserName(name)" [disabled]="!name">Başla!</button>
+                <button *ngIf="words" mat-flat-button color="primary" (click)="setUserName(name)" [disabled]="!name">Başla!</button>
             </div>
         </div>
     </div>
@@ -36,11 +36,12 @@
                     <label class="letter" for="letter">☐</label>
                 </span>
                 <mat-card>
-                    <input matInput class="form-control" placeholder="Tahmininizi Girin" type="text"
+                    <input matInput class="form-control predicted" placeholder="Tahmininizi Girin" type="text"
                         [(ngModel)]="predictedVal" name=predictedVal>
                 </mat-card>
             </div>
-            <button mat-flat-button color="primary" (click)="wordController(predictedVal)">Tahmin Et!</button>
+            <button *ngIf="wordPoint != 1000" mat-flat-button color="primary" (click)="wordController(predictedVal)">Tahmin Et!</button>
+            <button *ngIf="wordPoint == 1000" mat-flat-button color="warning" (click)="finishGame()">Oyunu Bitir!</button>
         </div>
     </div>
 </div>

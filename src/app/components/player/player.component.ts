@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { WordService } from 'src/app/services/word.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { Word } from 'src/app/models/word.model';
 import { WordsLength } from 'src/app/models/words-length.model';
 import { LevelWords } from 'src/app/models/level-words.model';
@@ -151,7 +151,9 @@ export class PlayerComponent implements OnInit {
     } else if (input === 10) {
       this.currentWord = this.levelWords.level_7[this.randomInt(0, this.levelWords.level_7.length)];
     }
-
+    if(!this.currentWord){
+      this.getWordForLevels(input);
+    }
     this.letters = Array.from(this.currentWord.word);
     this.question = this.currentWord.question;
     console.log(this.currentWord);
@@ -159,6 +161,7 @@ export class PlayerComponent implements OnInit {
 
   gameController(): void {
     this.getWords();
+    delay(50);
     if (this.started) {
       if (this.sessionDone) {
         this.getWordForLevels(this.expectedlyWordLength);
