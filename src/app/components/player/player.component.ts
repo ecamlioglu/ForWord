@@ -31,13 +31,14 @@ export class PlayerComponent implements OnInit {
   wordPoint: number;
   sessionCount: number;
   expectedlyWordLength = 4;
-  currentWord = "";
+  currentWord: Word = new Word();
 
   playerPoint = 0;
 
   levels = WordsLength;
   levelWords: LevelWords;
   letters: any[];
+  question: string;
 
   users: User[];
   words: Word[] = [];
@@ -95,7 +96,6 @@ export class PlayerComponent implements OnInit {
         p => ({ key: p.payload.key, ...p.payload.val() })
       ))).subscribe(data => {
         this.words = data;
-        console.log(this.words);
       });
     this.setWordsToLengths();
   }
@@ -137,22 +137,23 @@ export class PlayerComponent implements OnInit {
 
   getWordForLevels(input: number): void {
     if (input === 4) {
-      this.currentWord = this.levelWords.level_1[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_1[this.randomInt(0, this.levelWords.level_1.length)];
     } else if (input === 5) {
-      this.currentWord = this.levelWords.level_2[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_2[this.randomInt(0, this.levelWords.level_2.length)];
     } else if (input === 6) {
-      this.currentWord = this.levelWords.level_3[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_3[this.randomInt(0, this.levelWords.level_3.length)];
     } else if (input === 7) {
-      this.currentWord = this.levelWords.level_4[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_4[this.randomInt(0, this.levelWords.level_4.length)];
     } else if (input === 8) {
-      this.currentWord = this.levelWords.level_5[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_5[this.randomInt(0, this.levelWords.level_5.length)];
     } else if (input === 9) {
-      this.currentWord = this.levelWords.level_6[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_6[this.randomInt(0, this.levelWords.level_6.length)];
     } else if (input === 10) {
-      this.currentWord = this.levelWords.level_7[this.randomInt(0, input)].word;
+      this.currentWord = this.levelWords.level_7[this.randomInt(0, this.levelWords.level_7.length)];
     }
 
-    this.letters = Array.from(this.currentWord);
+    this.letters = Array.from(this.currentWord.word);
+    this.question = this.currentWord.question;
     console.log(this.currentWord);
   }
 
@@ -161,25 +162,27 @@ export class PlayerComponent implements OnInit {
     if (this.started) {
       if (this.sessionDone) {
         this.getWordForLevels(this.expectedlyWordLength);
-        this.wordPoint = this.currentWord.length * 100;
-        if (this.isKnew) {
-          if (this.sessionCount == 2) {
-            this.expectedlyWordLength++;
-          }
-          this.isKnew = false;
-          this.sessionCount++;
+        this.wordPoint = this.currentWord.word.length * 100;
+        this.isKnew = false;
+        if (this.sessionCount == 2) {
+          this.expectedlyWordLength++;
+          this.sessionCount = 0;
         }
+        this.sessionCount++;
         this.sessionDone = false;
+        console.log(this.playerPoint, "point", this.wordPoint, "wordpoint", this.expectedlyWordLength, "wordlength", this.sessionCount, "session count");
       }
     }
   }
 
   wordController(word: string): void {
-    if (this.currentWord == word) {
+    if (this.currentWord.word == word) {
       this.isKnew = true;
       this.playerPoint += this.wordPoint;
       this.wordPoint = 0;
       this.sessionDone = true;
+      
+      this.gameController();
     } else {
       return;
     }

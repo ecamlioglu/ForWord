@@ -4,8 +4,11 @@
             <label for="title"> WORD </label>
             <input type="text" id="title"
             class="form-control" required 
-            [(ngModel)]="word.word" name="title"
-            (keyup.enter)="saveWord()" (focus)="true">
+            [(ngModel)]="word.word" name="title" (focus)="true">
+            <label for="question"> Question </label>
+            <input type="text" id="question"
+            class="form-control" required 
+            [(ngModel)]="word.question" name="question" (focus)="true">
         </div>
         <button (click)="saveWord()" class="btn btn-success">Kayıt Et</button>
     </div>

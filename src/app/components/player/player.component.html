@@ -3,15 +3,13 @@
         <div class="form-group">
             <div class="user-input">
                 <h5>İsminizi Giriniz...</h5>
-                <input type="text" maxlength="64"
-                class="form-control" required
-                [(ngModel)]="name" name=title>
+                <input type="text" maxlength="64" class="form-control" required [(ngModel)]="name" name=title>
             </div>
             <div>
-                <button mat-flat-button color="primary"(click)="setUserName(name)" [disabled]="!name">Başla!</button>
+                <button mat-flat-button color="primary" (click)="setUserName(name)" [disabled]="!name">Başla!</button>
             </div>
         </div>
-    </div> 
+    </div>
     <div *ngIf="started">
         <div *ngIf="!timerStarted">
             <h3>Hazırsan süreyi başlatabilirsin.
@@ -29,14 +27,20 @@
                 </span>
             </div>
             <div>
+                <span>
+                    <label class="question" for="question">{{question}}</label>
+                </span>
+            </div>
+            <div>
                 <span *ngFor="let letter of letters">
                     <label class="letter" for="letter">☐</label>
                 </span>
-                <mat-card >
-                    <input matInput class="form-control" placeholder="Tahmininizi Girin" type="text" [(ngModel)]="predictedVal" name=predictedVal>
+                <mat-card>
+                    <input matInput class="form-control" placeholder="Tahmininizi Girin" type="text"
+                        [(ngModel)]="predictedVal" name=predictedVal>
                 </mat-card>
             </div>
-            <button mat-flat-button color="warn" (click)="finishGame()">Bitir!</button>
+            <button mat-flat-button color="primary" (click)="wordController(predictedVal)">Tahmin Et!</button>
         </div>
     </div>
 </div>
