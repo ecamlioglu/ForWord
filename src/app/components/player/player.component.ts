@@ -8,6 +8,7 @@ import { WordsLength } from 'src/app/models/words-length.model';
 import { LevelWords } from 'src/app/models/level-words.model';
 import { CountdownComponent } from 'ngx-countdown';
 import { Letters } from 'src/app/models/letters.model';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -48,8 +49,10 @@ export class PlayerComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  constructor(private _wordService: WordService,
-    private _snackBar: MatSnackBar) { }
+  constructor(
+    private _wordService: WordService,
+    private _userService: UserService,
+    private _snackBar: MatSnackBar,) { }
 
 
   ngOnInit(): void {
@@ -83,7 +86,7 @@ export class PlayerComponent implements OnInit {
   }
 
   getLastGameId(): void {
-    this._wordService.getAllUsers().snapshotChanges().pipe(
+    this._userService.getAllUsers().snapshotChanges().pipe(
       map(changes => changes.map(c =>
         ({ key: c.payload.key, ...c.payload.val() })
       ))).subscribe(data => {
@@ -228,7 +231,7 @@ export class PlayerComponent implements OnInit {
     const finishedTime = 300000 - this.countdown.left;
     console.log(finishedTime);
     this.user.secondsToLive = finishedTime.toString();
-    this._wordService.createUser(this.user).then(
+    this._userService.createUser(this.user).then(
       this.openSnackBar("Oyun bitti!", "Kapat")
     ).catch(err => console.log(err));
   }
