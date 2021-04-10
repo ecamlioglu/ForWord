@@ -7,6 +7,7 @@ import { Word } from 'src/app/models/word.model';
 import { WordsLength } from 'src/app/models/words-length.model';
 import { LevelWords } from 'src/app/models/level-words.model';
 import { CountdownComponent } from 'ngx-countdown';
+import { Letters } from 'src/app/models/letters.model';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -37,7 +38,7 @@ export class PlayerComponent implements OnInit {
 
   levels = WordsLength;
   levelWords: LevelWords;
-  letters: any[];
+  letters: Letters[] = [];
   question: string;
 
   users: User[];
@@ -154,7 +155,14 @@ export class PlayerComponent implements OnInit {
     if(!this.currentWord){
       this.getWordForLevels(input);
     }
-    this.letters = Array.from(this.currentWord.word);
+    this.letters = [];
+    Array.from(this.currentWord.word).forEach(element => {
+      var temp = new Letters();
+      temp.isActive = false;
+      temp.letter = element;
+      this.letters.push(temp);
+    });
+    console.log(this.letters);
     this.question = this.currentWord.question;
     console.log(this.currentWord);
   }
@@ -168,6 +176,9 @@ export class PlayerComponent implements OnInit {
         this.wordPoint = this.currentWord.word.length * 100;
         this.isKnew = false;
         if (this.sessionCount == 2) {
+          if(this.currentWord.word.length == 10){
+            this.finishGame();
+          }
           this.expectedlyWordLength++;
           this.sessionCount = 0;
         }
@@ -193,15 +204,20 @@ export class PlayerComponent implements OnInit {
 
 
   isHintTaken(): void {
-    this.wordPoint -= 100;
+    this.playerPoint -= 100;
   }
 
-  hint(): void {
-
+  hint(letters: Letters[]): void {
+    var rnd = this.randomInt(0, (this.expectedlyWordLength-1));
+    letters[rnd].isActive=true;
+    if(letters[rnd].isActive){
+      this.isHintTaken();
+    }
   }
 
   gameTimer(): void {
-    if (this.countdown.config.leftTime <= 0) {
+    if (this.countdown.left <= 0) {
+      console.log("süre sonlandı!!");
       this.finishGame();
     }
   }
