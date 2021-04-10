@@ -1,0 +1,18 @@
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">İsim</th>
+      <th scope="col">Skor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let player of top10Player; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ player.name }}
+      </td>
+      <td>{{ player.secondsToLive | number }}</td>
+    </tr>
+    </tbody>
+  </table>

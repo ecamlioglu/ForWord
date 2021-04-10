@@ -14,9 +14,12 @@ import { FormsModule } from '@angular/forms';
 import { AddWordsComponent } from './components/add-words/add-words.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CountdownModule } from 'ngx-countdown';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
+import { MatTableModule } from '@angular/material/table';
+
 
 
 @NgModule({
@@ -25,6 +28,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     WordsComponent,
     PlayerComponent,
     AddWordsComponent,
+    ScoreboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     CountdownModule,
     MatCardModule,
     MatButtonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
