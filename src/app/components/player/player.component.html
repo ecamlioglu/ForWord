@@ -18,30 +18,39 @@
             <button mat-flat-button color="accent" (click)="countdownStart()"> Süreyi Başlat !</button>
         </div>
         <div *ngIf="timerStarted">
-            <div class="counter">
-
-                <h4>Süreniz Başladı Kelimeyi Bilmeye Çalışın !</h4>
+            <div class="row">
+                <div class="col-4">
+                    <span>
+                        Puan : {{playerPoint | number}}
+                    </span>
+                </div>
+                <div class="col-4 counter">
+                    <h4>Süreniz Başladı Kelimeyi Bilmeye Çalışın !</h4>
+                    <span>
+                        Kalan Süreniz:
+                        <countdown #cd [config]="{ leftTime: gameTime, format: 'm:s'}" (event)="gameTimer()"></countdown>
+                    </span>
+                </div>
+            </div>
+            <div class="question">
                 <span>
-                    Kalan Süreniz:
-                    <countdown #cd [config]="{ leftTime: gameTime, format: 'm:s'}"></countdown>
+                    <label class="font-weight-normal display-4" for="question">{{question}}</label>
                 </span>
             </div>
-            <div>
-                <span>
-                    <label class="question" for="question">{{question}}</label>
-                </span>
-            </div>
-            <div>
+            <div class="letters" >
                 <span *ngFor="let letter of letters">
-                    <label class="letter" for="letter">☐</label>
+                    <label class="letter" for="letter" *ngIf="letter.isActive">{{letter.letter}}</label>
+                    <label class="letter" for="letter" *ngIf="!letter.isActive">☐</label>
                 </span>
-                <mat-card>
-                    <input matInput class="form-control predicted" placeholder="Tahmininizi Girin" type="text"
-                        [(ngModel)]="predictedVal" name=predictedVal>
-                </mat-card>
             </div>
-            <button *ngIf="wordPoint != 1000" mat-flat-button color="primary" (click)="wordController(predictedVal)">Tahmin Et!</button>
-            <button *ngIf="wordPoint == 1000" mat-flat-button color="warning" (click)="finishGame()">Oyunu Bitir!</button>
+            <mat-card class="predict-value">
+                <input matInput class="form-control text-uppercase" placeholder="Tahmininizi Girin" 
+                type="text" [(ngModel)]="predictedVal" name=predictedVal>
+            </mat-card>
+            <div class="row">
+                <button mat-flat-button color="primary" (click)="wordController(predictedVal)">Tahmin Et!</button>
+                <button mat-flat-button color="primary" (click)="hint(letters)">Harf Al!</button>
+            </div>
         </div>
     </div>
 </div>
