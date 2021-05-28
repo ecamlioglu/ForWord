@@ -1,6 +1,6 @@
 {
   "name": "for-word",
-  "version": "0.0.0",
+  "version": "1.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -31,7 +31,8 @@
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.3"
+    "zone.js": "~0.11.3",
+    "is-svg": "4.3.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.1",
