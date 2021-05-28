@@ -1,3 +1,4 @@
+//This settings are neccessary for environment configuration for database and hosting.
 export const environment = {
   production: true,
   firebase: {
