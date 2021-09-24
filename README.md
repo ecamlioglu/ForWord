@@ -1,5 +1,7 @@
 # ForWord
 
+This project is university term project. Only available for test usage. Not available for production or any commercial usage.
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e9423791-ec87-4853-9835-d57857d85fa3/deploy-status)](https://app.netlify.com/sites/brave-lichterman-2300d5/deploys)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
